@@ -5,27 +5,26 @@
 
 	<Script File="vTrakr.lua"/>
 
-	<Frame name="DragFrame1" enableMouse="true" movable="true">
-	 <Scripts>
-	  <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
-	  <OnDragStart>self:StartMoving();</OnDragStart>
-	  <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
-	  <OnLoad>self.TimeSinceLastUpdate = 0 </OnLoad>
-	  <OnLoad function="vTrakr_OnLoad" />
-      <OnUpdate function="vTrakr_OnUpdate" /> 
-	 </Scripts>
-	 <!-- Tags below add a visual element to the frame. -->
-	 <Layers>
-	  <Layer level="ARTWORK">
-	   <Texture setAllPoints="true">
-	    <Color r="1.0" g="1.0" b="1.0" a="0.3" />
-	   </Texture>
-	  </Layer>
-	 </Layers>
-	 <Size x="64" y="64" />
-	 <Anchors>
-	 	<Anchor point="CENTER" relativeTo="UIParent"/>
-	 </Anchors>
-</Frame>
+	<Frame name="MainFrame" enableMouse="true" movable="true">
+ 		<Scripts>
+		    <OnDragStart function = "vTrakr_OnDragStart"/>
+		    <OnDragStop function = "vTrakr_OnDragStop"/>
+ 			<OnLoad function = "vTrakr_OnLoad"/>
+			<OnUpdate function="vTrakr_OnUpdate" /> 
+		</Scripts>
 
- </Ui>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture setAllPoints="true">
+					<Color r="1.0" g="1.0" b="1.0" a="0.3" />
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Size x="64" y="64" />
+
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+	</Frame>
+</Ui>

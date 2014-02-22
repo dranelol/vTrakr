@@ -1,18 +1,30 @@
 -- Globals Section
 updateInterval = 1.0; -- How often the OnUpdate code will run (in seconds)
+TimeSinceLastUpdate = 0.0;
 
 -- Functions Section
 function vTrakr_OnUpdate(self, elapsed)
-  self.TimeSinceLastUpdate = self.TimeSinceLastUpdate + elapsed; 	
+	TimeSinceLastUpdate = TimeSinceLastUpdate + elapsed; 	
 
-  if (self.TimeSinceLastUpdate > updateInterval) then
-    print("im trackin dat v"); 
+	if (TimeSinceLastUpdate > updateInterval) then
+		print("im trackin dat v"); 
 
-    self.TimeSinceLastUpdate = 0;
-  end
+		TimeSinceLastUpdate = 0;
+	end
 end
 
 
-function vTrakr_OnLoad() 
-  print("vTrakr Loaded"); 
+function vTrakr_OnLoad(self)
+	self:RegisterForDrag("LeftButton");
+	TimeSinceLastUpdate = 0.0;
+	print("vTrakr Loaded"); 
+	print(TimeSinceLastUpdate);
+end
+
+function vTrakr_OnDragStart(self, button)
+	self:StartMoving();
+end
+
+function vTrakr_OnDragStop(self, button)
+	self:StopMovingOrSizing();
 end
