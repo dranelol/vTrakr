@@ -35,9 +35,9 @@ function vTrakr_OnUpdate(self, elapsed)
 					local Vengeance = select(15, UnitBuff(raidUnit, "Vengeance"));
 					local value = Vengeance or 0;
 					
-					print("vengeance of "..playerName.." is: "..value);
-					local helloFS = self:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-					helloFS:SetPoint("CENTER");
+					--print("vengeance of "..playerName.." is: "..value);
+					local helloFS = self:CreateFontString(nil, "OVERLAY", "GameTooltipText");
+					helloFS:SetPoint("TOPLEFT", 0, 0 - i*10);
 					helloFS:SetText("gooby");
 
 				end
@@ -59,6 +59,9 @@ function vTrakr_OnLoad(self)
 	TimeSinceLastUpdate = 0.0;
 	print("vTrakr Loaded"); 
 	print(TimeSinceLastUpdate);
+	self:RegisterEvent("GROUP_ROSTER_CHANGED");
+	self:RegisterEvent("PARTY_MEMBERS_CHANGED");
+	self:RegisterEvent("RAID_ROSTER_UPDATE");
 end
 
 function vTrakr_OnDragStart(self, button)
@@ -80,8 +83,8 @@ end
 
 
 
-function vTrakr_OnEvent(self,...)
-
+function vTrakr_OnEvent(self,event,...)
+	print("event logged: "..event);
 end
 
 
