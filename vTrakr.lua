@@ -32,10 +32,14 @@ function vTrakr_OnUpdate(self, elapsed)
 					--print(UnitName("raid"..i));
 					local playerName = select(1,UnitName("raid"..i));
 					local raidUnit = "raid"..i;
-					local Vengeance = select(15, UnitBuff(raidUnit, self.VengeanceName));
+					local Vengeance = select(15, UnitBuff(raidUnit, "Vengeance"));
 					local value = Vengeance or 0;
 					
 					print("vengeance of "..playerName.." is: "..value);
+					local helloFS = self:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+					helloFS:SetPoint("CENTER");
+					helloFS:SetText("gooby");
+
 				end
 			end
 		end
@@ -47,6 +51,8 @@ end
 
 
 function vTrakr_OnLoad(self)
+
+	self.text = self:CreateFontString(nil, "OVERLAY", "GameFontNormal");
 	self:RegisterForDrag("LeftButton");
 	--self:RegisterEvent("INSPECT_READY");
 	self.unit=0;
