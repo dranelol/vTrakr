@@ -10,7 +10,8 @@
 		    <OnDragStart function = "vTrakr_OnDragStart"/>
 		    <OnDragStop function = "vTrakr_OnDragStop"/>
  			<OnLoad function = "vTrakr_OnLoad"/>
-			<OnUpdate function="vTrakr_OnUpdate" /> 
+			<OnUpdate function="vTrakr_OnUpdate" />
+			<OnEvent function="vTrakr_OnEvent"/>
 		</Scripts>
 
 		<Layers>
