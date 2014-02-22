@@ -1,10 +1,18 @@
--- Globals Section
-updateInterval = 1.0; -- How often the OnUpdate code will run (in seconds)
-TimeSinceLastUpdate = 0.0;
-unitCounter=0;
+local updateInterval = 1.0; 
+local TimeSinceLastUpdate = 0.0;
+local unitCounter=0;
+-- 1d array of bar frames to draw
+local vBars = {}
+-- set of vengeance values; key = player name, value = vengeance
+local vTable = {}
+
+local function sortVfunction(a, b)
+	return vTable[a][0] > vTable[b][0]
+end
+
+-- mapping of spec name onto id
 local specs=
 {
-
  [250]="Blood", [251]="Frost", [252]="Unholy", [102]="Balance", [103]="Feral",
  [104]="Guardian", [105]="Restoration", [253]="Beast Mastery", [254]="Marksmanship",
  [255]="Survival", [62]="Arcane", [63]="Fire", [64]="Frost", [268]="Brewmaster",
@@ -25,29 +33,46 @@ function vTrakr_OnUpdate(self, elapsed)
 		--NotifyInspect(actualUnit(unitCounter))
 		if(IsInRaid() == true) then
 			--print("sup im in raid");
-			for i = 1, GetNumGroupMembers() do 
-				--
-				if(checkIfTank("raid"..i) == true) then
-					--print("found a tank: ".."raid"..i);
-					--print(UnitName("raid"..i));
-					local playerName = select(1,UnitName("raid"..i));
-					local raidUnit = "raid"..i;
-					local Vengeance = select(15, UnitBuff(raidUnit, "Vengeance"));
-					local value = Vengeance or 0;
-					
-					--print("vengeance of "..playerName.." is: "..value);
-					local helloFS = self:CreateFontString(nil, "OVERLAY", "GameTooltipText");
-					helloFS:SetPoint("TOPLEFT", 0, 0 - i*10);
-					helloFS:SetText("gooby");
+			UpdateVengeance();
 
-				end
-			end
+			
 		end
 
 
 		TimeSinceLastUpdate = 0;
 	end
 end
+
+function ClearAll()
+	for i =0, #vBars do
+		vBars[i].Hide();
+	end
+end
+
+function UpdateVengeance()
+	for i = 1, GetNumGroupMembers() do
+		if(checkIfTank("raid"..i) == true) then
+			--print("found a tank: ".."raid"..i);
+			--print(UnitName("raid"..i));
+			local playerName = select(1,UnitName("raid"..i));
+			local raidUnit = "raid"..i;
+			local Vengeance = select(15, UnitBuff(raidUnit, "Vengeance"));
+			local value = Vengeance or 0;
+		 	jvTable[raidUnit] = value;
+		 	for j,k in pairs(vTable) do
+		 		prraidUnit
+		 	end
+
+
+			--print("vengeance of "..playerName.." is: "..value);
+			--local fontString = self:CreateFontString(nil, "OVERLAY", "GameTooltipText");
+			--fontString:SetPoint("TOPLEFT", 0, 0 - i*10);
+			--fontString:SetText("gooby");
+
+		end
+	end
+end
+
 
 
 function vTrakr_OnLoad(self)
@@ -62,6 +87,10 @@ function vTrakr_OnLoad(self)
 	self:RegisterEvent("GROUP_ROSTER_CHANGED");
 	self:RegisterEvent("PARTY_MEMBERS_CHANGED");
 	self:RegisterEvent("RAID_ROSTER_UPDATE");
+	self:RegisterEvent("GROUP_ROSTER_UPDATE");
+	self.BarList = CreateFrame("Frame", "vBarList", self.Anchor);
+	self.BarList.barsShown = 0;
+
 end
 
 function vTrakr_OnDragStart(self, button)
@@ -85,6 +114,13 @@ end
 
 function vTrakr_OnEvent(self,event,...)
 	print("event logged: "..event);
+	-- loop through group members
+	for i = 1, GetNumGroupMembers() do
+		-- if current member exists in table
+		if() then
+		end
+
+	end
 end
 
 
