@@ -9,6 +9,12 @@ function vTrakr_OnUpdate(self, elapsed)
 	if (TimeSinceLastUpdate > updateInterval) then
 		print("im trackin dat v"); 
 
+		if(IsInRaid() == true)
+			for i = 1, GetNumRaidMembers() do 
+				print(UnitName("raid"..i));
+			end
+
+
 		TimeSinceLastUpdate = 0;
 	end
 end
