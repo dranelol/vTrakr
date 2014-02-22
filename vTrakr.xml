@@ -7,8 +7,10 @@
 
 	<Frame name="DragFrame1" enableMouse="true" movable="true">
 	 <Scripts>
+	  <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
 	  <OnDragStart>self:StartMoving();</OnDragStart>
 	  <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+	  <OnLoad>self.TimeSinceLastUpdate = 0 </OnLoad>
 	  <OnLoad function="vTrakr_OnLoad" />
       <OnUpdate function="vTrakr_OnUpdate" /> 
 	 </Scripts>
