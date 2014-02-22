@@ -7,12 +7,17 @@ function vTrakr_OnUpdate(self, elapsed)
 	TimeSinceLastUpdate = TimeSinceLastUpdate + elapsed; 	
 
 	if (TimeSinceLastUpdate > updateInterval) then
-		print("im trackin dat v"); 
+		--print("im trackin dat v"); 
 
-		if(IsInRaid() == true)
-			for i = 1, GetNumRaidMembers() do 
-				print(UnitName("raid"..i));
+		if(IsInRaid() == true) then
+			--print("sup im in raid");
+			for i = 1, GetNumGroupMembers() do 
+				--print(UnitName("raid"..i));
+				if(checkIfTank("raid"..i) == true) then
+					print("found a tank: ".."raid"..i);
+				end
 			end
+		end
 
 
 		TimeSinceLastUpdate = 0;
@@ -33,4 +38,13 @@ end
 
 function vTrakr_OnDragStop(self, button)
 	self:StopMovingOrSizing();
+end
+
+function checkIfTank(uidName)
+	local guid = UnitGUID(uidName);
+	local id = GetInspectSpecialization(guid);
+	print("guid of "..uidName.." is "..guid);
+	print("specinfo of guid: "..guid.. " "..id);
+
+	return true;
 end
