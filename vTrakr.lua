@@ -41,7 +41,7 @@ function vTrakr_OnUpdate(self, elapsed)
 			-- clear bars
 			ClearAll();
 			-- add bars
-			DrawBars();
+			DrawBars(self);
 	
 		end
 
@@ -49,13 +49,14 @@ function vTrakr_OnUpdate(self, elapsed)
 	end
 end
 
-function DrawBars()
+function DrawBars(self)
 	for j,k in pairs(vTable) do
  		print(j, k[1], k[2]);
 
- 		local bar;
- 		
-
+ 		local bar = CreateFrame("Frame", nil, self)
+ 		vBars[#vBars] = bar;
+ 		bar.Text1:SetFormattedText("%s, %s, %d", j, k[0], k[1]);
+ 		bar:Show();
 
  	end
 
@@ -149,5 +150,6 @@ function vTrakr_OnEvent(self,event,...)
 
 	
 end
+
 
 
