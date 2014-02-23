@@ -7,7 +7,7 @@ local vBars = {}
 local vTable = {}
 
 local function sortVfunction(a, b)
-	return vTable[a][0] > vTable[b][0]
+	return vTable[a][0] > vTable[b][1]
 end
 
 -- mapping of spec name onto id
@@ -38,6 +38,9 @@ function vTrakr_OnUpdate(self, elapsed)
 			ResetVengeance();
 			-- update vengeance
 			UpdateVengeance();
+
+			sort(vTable, sortVfunction)
+
 			-- clear bars
 			ClearAll();
 			-- add bars
@@ -50,13 +53,16 @@ function vTrakr_OnUpdate(self, elapsed)
 end
 
 function DrawBars(self)
+	local i=0;
 	for j,k in pairs(vTable) do
- 		print(j, k[1], k[2]);
+ 		--print(j, k[0], k[1]);
+ 		
+ 		local fontString = self:CreateFontString(nil, "OVERLAY", "GameTooltipText");
+		fontString:SetPoint("TOPLEFT", 0, 0 - i*10);
+		fontString:SetText(j.." "..k[0].." "..k[1]);
 
- 		local bar = CreateFrame("Frame", nil, self)
- 		vBars[#vBars] = bar;
- 		bar.Text1:SetFormattedText("%s, %s, %d", j, k[0], k[1]);
- 		bar:Show();
+		vBars[i] = fontString;
+		i=i+1;
 
  	end
 
@@ -70,10 +76,9 @@ end
 
 -- reset all graphical bars
 function ClearAll()
-	for i = 0, #vBars do
-		--vBars[i].Hide();
-		--vBars[i] = nil;
-		
+	for key, item in pairs(vBars) do
+		vBars[key]:Hide();
+		vBars[key] = nil;
 	end
 end
 -- I would like to update this functionality to keep bars if possible, and only update what needs updating
@@ -90,8 +95,8 @@ function UpdateVengeance()
 			local value = Vengeance or 0;
 			local updateUnit = {};
 
-			updateUnit[1] = value;
-			updateUnit[2] = playerName;
+			updateUnit[0] = value;
+			updateUnit[1] = playerName;
 
 		 	vTable[raidUnit] = updateUnit;
 
