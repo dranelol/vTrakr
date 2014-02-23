@@ -3,7 +3,7 @@ local TimeSinceLastUpdate = 0.0;
 local unitCounter=0;
 -- 1d array of bar frames to draw
 local vBars = {}
--- set of vengeance values; key = player name, value = vengeance
+-- set of vengeance values; key = player name, value = (vengeance, currentRaidID)
 local vTable = {}
 
 local function sortVfunction(a, b)
@@ -33,23 +33,52 @@ function vTrakr_OnUpdate(self, elapsed)
 		--NotifyInspect(actualUnit(unitCounter))
 		if(IsInRaid() == true) then
 			--print("sup im in raid");
-			UpdateVengeance();
-
 			
+			-- reset vengeance table
+			ResetVengeance();
+			-- update vengeance
+			UpdateVengeance();
+			-- clear bars
+			ClearAll();
+			-- add bars
+			DrawBars();
+	
 		end
-
 
 		TimeSinceLastUpdate = 0;
 	end
 end
 
-function ClearAll()
-	for i =0, #vBars do
-		vBars[i].Hide();
-	end
+function DrawBars()
+	for j,k in pairs(vTable) do
+ 		print(j, k[1], k[2]);
+
+ 		local bar;
+ 		
+
+
+ 	end
+
 end
 
+function ResetVengeance()
+	for j,k in pairs(vTable) do
+ 		vTable[j] = nil;
+ 	end
+end
+
+-- reset all graphical bars
+function ClearAll()
+	for i = 0, #vBars do
+		--vBars[i].Hide();
+		--vBars[i] = nil;
+		
+	end
+end
+-- I would like to update this functionality to keep bars if possible, and only update what needs updating
+-- instead of clearing everything then rebuilding it
 function UpdateVengeance()
+
 	for i = 1, GetNumGroupMembers() do
 		if(checkIfTank("raid"..i) == true) then
 			--print("found a tank: ".."raid"..i);
@@ -58,11 +87,12 @@ function UpdateVengeance()
 			local raidUnit = "raid"..i;
 			local Vengeance = select(15, UnitBuff(raidUnit, "Vengeance"));
 			local value = Vengeance or 0;
-		 	jvTable[raidUnit] = value;
-		 	for j,k in pairs(vTable) do
-		 		prraidUnit
-		 	end
+			local updateUnit = {};
 
+			updateUnit[1] = value;
+			updateUnit[2] = playerName;
+
+		 	vTable[raidUnit] = updateUnit;
 
 			--print("vengeance of "..playerName.." is: "..value);
 			--local fontString = self:CreateFontString(nil, "OVERLAY", "GameTooltipText");
@@ -114,13 +144,10 @@ end
 
 function vTrakr_OnEvent(self,event,...)
 	print("event logged: "..event);
-	-- loop through group members
-	for i = 1, GetNumGroupMembers() do
-		-- if current member exists in table
-		if() then
-		end
+	-- loop through indexes 
+	
 
-	end
+	
 end
 
 
