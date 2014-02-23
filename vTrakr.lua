@@ -7,7 +7,7 @@ local vBars = {}
 local vTable = {}
 
 local function sortVfunction(a, b)
-	return vTable[a][0] > vTable[b][1]
+	return vTable[a][0] > vTable[b][0]
 end
 
 -- mapping of spec name onto id
@@ -39,7 +39,7 @@ function vTrakr_OnUpdate(self, elapsed)
 			-- update vengeance
 			UpdateVengeance();
 
-			sort(vTable, sortVfunction)
+			sort(vTable, sortVfunction);
 
 			-- clear bars
 			ClearAll();
