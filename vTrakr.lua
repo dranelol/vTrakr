@@ -1,4 +1,4 @@
-local updateInterval = 1.0; 
+local updateInterval = 0.3; 
 local TimeSinceLastUpdate = 0.0;
 local unitCounter=0;
 -- 1d array of bar frames to draw
